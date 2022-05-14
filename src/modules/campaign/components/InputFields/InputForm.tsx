@@ -11,6 +11,7 @@ import { createCampaignInterface } from "../../types/index";
 import web3 from "../../../../etherum/web3";
 import { useRouter } from "next/router";
 import SnackBar from "../SnackBar";
+import useCreateCampaign from "../../hooks/campaign";
 
 interface fields {
   name: string;
@@ -28,6 +29,8 @@ const InputForm = () => {
   const [errMessage, seterrMessage] = useState("");
 
   const router = useRouter();
+
+  const { createNewCampaign } = useCreateCampaign();
 
   const Fields: Array<fields> = [
     {
@@ -56,42 +59,35 @@ const InputForm = () => {
   ];
 
   const getInputColumns = () => {
-    return Fields.map((field: fields) => {
-      return <InputFields fieldName={field.name} onChange={field.onClick} />;
+    return Fields.map((field: fields, index: number) => {
+      return (
+        <InputFields
+          key={index}
+          fieldName={field.name}
+          onChange={field.onClick}
+        />
+      );
     });
   };
 
   const submitResponse = async () => {
     console.log("called");
     setLoading(true);
-    try {
-      const params: createCampaignInterface = {
-        name: campaignname,
-        description: campaignDes,
-        imageUrl: campaignImage,
-        minCon: minimumContribution,
-        minFund: minFun,
-      };
-      const accounts = await web3.eth.getAccounts();
+    const params: createCampaignInterface = {
+      name: campaignname,
+      description: campaignDes,
+      imageUrl: campaignImage,
+      minCon: minimumContribution,
+      minFund: minFun,
+    };
 
-      await factory.methods
-        .createCampaign(
-          params.name,
-          params.description,
-          params.imageUrl,
-          params.minCon,
-          params.minFund
-        )
-        .send({
-          from: accounts[0],
-        });
-      router.back();
-    } catch (error) {
+    const res = await createNewCampaign(params);
+    if (res === "success") router.back();
+    else {
       setSnackBar(true);
-      seterrMessage(error.message);
-    } finally {
-      setLoading(false);
+      seterrMessage(res);
     }
+    setLoading(false);
   };
 
   const getDisableStatus = useCallback(() => {

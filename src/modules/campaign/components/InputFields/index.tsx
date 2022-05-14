@@ -3,6 +3,9 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { ColumnFlex, InputFlex } from "./styles";
 import { Typography } from "@mui/material";
+import InputAdornment from '@mui/material/InputAdornment';
+import OutlinedInput from '@mui/material/OutlinedInput';
+
 
 interface InputFieldProps {
   fieldName: string;
@@ -20,11 +23,14 @@ const InputFields = (props: InputFieldProps) => {
       <ColumnFlex>
         <Typography>{props.fieldName}</Typography>
       </ColumnFlex>
-      <TextField
+      <OutlinedInput
         id="outlined-basic"
-        label={props.fieldName}
-        variant="outlined"
+        // label={props.fieldName}
         onChange={(e) => props.onChange(e.target.value)}
+        endAdornment={(props.fieldName==="Minimum Contribution" || props.fieldName==="Fund Goal amount") && <InputAdornment position="end">Wei</InputAdornment>}
+        inputProps={{
+          'aria-label': 'weight',
+        }}
       />
     </InputFlex>
   );

@@ -26,8 +26,8 @@ const Home = () => {
           Open Campaigns
         </h3>
         <ParentCotainer>
-        {contract.map((address: string) => {
-          return <CampaignCard contractAddress={address} />;
+        {contract.map((address: string, index: number) => {
+          return <CampaignCard  key={index} contractAddress={address} />;
         })}
         </ParentCotainer>
       </React.Fragment>
