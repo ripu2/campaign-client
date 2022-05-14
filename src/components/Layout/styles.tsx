@@ -5,7 +5,7 @@ export const ParentCotainer = styled(Box)(({}) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: "space-between",
-  height: '100vh',
+  // height: '100vh',
   padding: 100
 }));
 

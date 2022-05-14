@@ -11,7 +11,7 @@ import { createCampaignInterface } from "../../types/index";
 import web3 from "../../../../etherum/web3";
 import { useRouter } from "next/router";
 import SnackBar from "../SnackBar";
-import useCreateCampaign from "../../hooks/campaign";
+import { useCreateCampaign } from "../../hooks/campaign";
 
 interface fields {
   name: string;
@@ -71,7 +71,6 @@ const InputForm = () => {
   };
 
   const submitResponse = async () => {
-    console.log("called");
     setLoading(true);
     const params: createCampaignInterface = {
       name: campaignname,

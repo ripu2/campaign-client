@@ -6,7 +6,6 @@ export const ParentCotainer = styled(Box)(({}) => ({
     border: '3px solid #9772FB',
     display: 'flex',
     width: '40%',
-    height: 200,
     justifyContent: 'center',
     borderRadius: 10,
     marginRight: 20
@@ -15,10 +14,30 @@ export const ParentCotainer = styled(Box)(({}) => ({
 export const CardInsideContainer = styled(Box)(({}) => ({
     display: 'flex',
     flexDirection: 'column',
-    marginTop: 10
+    padding: 10,
+    width: '100%'
+}));
+
+export const CardHeader = styled(Box)(({}) => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+}));
+
+export const CardTypoContainer = styled(Box)(({}) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
 }));
 
 export const CardTypo = styled(Typography)(({}) => ({
    fontSize: 15,
-   fontWeight: 500
+   fontWeight: 500,
+   marginLeft: 50
 }));
+
+export const IconContainer = styled(Box)(({}) => ({
+    borderRadius: 50,
+    backgroundColor: "#E8F9FD",
+    marginRight: 30
+}));
+
