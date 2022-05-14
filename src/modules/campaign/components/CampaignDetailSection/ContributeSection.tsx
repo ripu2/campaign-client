@@ -15,6 +15,7 @@ export default function ContributeSection() {
   const [destination, setDestination] = useState("");
   const [loading, setLoading] = useState(false);
   const [transferLoading, setTransferLoading] = useState(false);
+  const [transferAmount, setTransferAmount] = useState("")
 
   const { dispatch } = useCampaigContext();
   const { contributeInCampaign } = useContributeInCampaign(dispatch);
@@ -51,7 +52,8 @@ export default function ContributeSection() {
         loading={transferLoading}
         onClick={createTransferRequest}
 				buttonText="Create request"
-				disabled={destination.length === 0}
+				disabled={destination.length === 0 || transferAmount.length ===0 }
+        onAmountChange={(val) => setTransferAmount(val)}
       />
 
       {/* <div>

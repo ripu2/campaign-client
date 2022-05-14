@@ -27,7 +27,7 @@ const InputFields = (props: InputFieldProps) => {
         id="outlined-basic"
         // label={props.fieldName}
         onChange={(e) => props.onChange(e.target.value)}
-        endAdornment={(props.fieldName==="Minimum Contribution" || props.fieldName==="Fund Goal amount" || props.fieldName === "Contribution Amount") && <InputAdornment position="end">Wei</InputAdornment>}
+        endAdornment={(props.fieldName==="Minimum Contribution" || props.fieldName==="Fund Goal amount" || props.fieldName === "Contribution Amount" || props.fieldName === "Transfer amount") && <InputAdornment position="end">Wei</InputAdornment>}
         inputProps={{
           'aria-label': 'weight',
         }}
