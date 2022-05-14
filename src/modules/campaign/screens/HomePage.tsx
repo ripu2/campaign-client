@@ -11,6 +11,9 @@ const Home = () => {
 
   const getDeployedCampaigns = useCallback(async () => {
     const campaigns = await factory.methods.getDeployedCampigns().call();
+
+    console.log('campaigns', campaigns)
+
     setContract(campaigns);
   }, [factory]);
 
