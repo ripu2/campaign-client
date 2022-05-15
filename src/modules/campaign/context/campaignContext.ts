@@ -1,11 +1,12 @@
 
-   
+
 import { State } from "../types/index";
 import React, { useContext } from "react";
 import { DefaultContext } from "../../../types";
 
 export const initialState: State = {
-    selectedContract: undefined
+  selectedContract: undefined,
+  isManager: false
 };
 
 const defaultVal: DefaultContext<State> = {

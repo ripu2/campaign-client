@@ -11,7 +11,8 @@ export const ButtonContainerContainer = styled(Button)(({}) => ({
     backgroundColor: '#9772FB',
     marginTop: 30,
     width: 200,
-    height: 50
+    height: 50,
+    textTransform: 'none'
 }));
 
 export const InputFlex = styled(Box)(({}) => ({

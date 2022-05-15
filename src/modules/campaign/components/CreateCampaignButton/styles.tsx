@@ -8,5 +8,6 @@ export const ParentCotainer = styled(Box)(({}) => ({
 }));
 
 export const ButtonContainerContainer = styled(Button)(({}) => ({
-    border: '2px solid #FF8D29'
+    border: '2px solid #FF8D29',
+    textTransform: 'none'
 }));

@@ -7,7 +7,7 @@ import web3 from "../../../etherum/web3"
 import _ from "lodash";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Dispatch, useReducer } from "react";
-import { initialState } from "../context/campaign";
+import { initialState } from "../context/campaignContext";
 
 const reducer = {
   setCampaign: function (
@@ -15,6 +15,12 @@ const reducer = {
     payload: PayloadAction<contractType | undefined>
   ) {
     state.selectedContract = payload.payload
+  },
+  setManagerStatus: function (
+    state: State,
+    payload: PayloadAction<boolean>
+  ) {
+    state.isManager = payload.payload
   }
 };
 
@@ -114,4 +120,38 @@ export function useContributeInCampaign(dispatch: Dispatch<any>) {
   }
 
   return { contributeInCampaign }
+}
+
+export function useGetManagerStatus(dispatch: Dispatch<any>) {
+  const getManagerStatus = async (address: any) => {
+    try {
+      const campaignInstance = campaign(address)
+      const res = await campaignInstance.methods.isManager().call()
+      console.log('res ====>', res)
+      if(dispatch) dispatch(campaignAction.setManagerStatus(res))
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
+  return { getManagerStatus }
+}
+
+export function useCreateTransferRequest() {
+  const createTransferRequest = async (requsetAmount: number, description: string, recipient: string, address: string) => {
+    try {
+      const campaignInstance = campaign(address)
+      const accounts = await web3.eth.getAccounts()
+
+      const res = await campaignInstance.methods.createRequest(requsetAmount, description, recipient).send({
+        from: accounts[0],
+        gas: '1000000'
+      })
+      console.log('res ====>', res)
+    } catch (error) {
+      alert(error.message)
+    }
+  }
+
+  return { createTransferRequest }
 }

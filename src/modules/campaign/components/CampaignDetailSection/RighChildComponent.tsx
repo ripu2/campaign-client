@@ -14,7 +14,8 @@ interface RighChildProps {
   onChange: Function;
   buttonText: string;
   disabled: boolean;
-  onAmountChange?: Function
+  onAmountChange?: Function;
+  onPurposeChange?: Function
 }
 
 export default function RighChildComponent(props: RighChildProps) {
@@ -28,6 +29,7 @@ export default function RighChildComponent(props: RighChildProps) {
 				buttonText={props.buttonText}
 				disabled={props.disabled}
         onAmountChange={(val) => props?.onAmountChange(val)}
+        onPurposeChange={(val) => props?.onPurposeChange(val)}
         />
     </div>
   );

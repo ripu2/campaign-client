@@ -1,8 +1,6 @@
 import { Typography } from "@mui/material";
 import React, { useCallback } from "react";
 import {
-  ButtonContainerContainer,
-  CellContainer,
   DetailBox,
   FlexContainer,
   HeaderTypo,
@@ -10,32 +8,24 @@ import {
   ParentCotainer,
   RightChild,
   SubHeaderTypo,
+  ViewRequests,
 } from "./styles";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { useRouter } from "next/router";
 import { RoutesEnum } from "../../../../types";
-import { useCampaigContext } from "../../context/campaign";
+import { useCampaigContext } from "../../context/campaignContext";
 import ContributeSection from "./ContributeSection";
+import { ColumnFlex } from "../InputFields/styles";
 
 const CampaignDetailSection = () => {
   const router = useRouter();
+  const { state } = useCampaigContext();
 
-  const createCampaign = useCallback(() => {
-    router.push(RoutesEnum.CreateCampaign);
-  }, []);
-
-  const { state, dispatch } = useCampaigContext();
+  const navigateToRequestPage = () => {
+    router.push(`/campaigns/view/transferRequests/${router.query.address}`);
+  };
 
   const getContractDataCells = useCallback(() => {
     if (state.selectedContract) {
-      // return Object.keys(state.selectedContract).map((cell: string) => {
-      //     return (
-      //       <DetailBox>
-      //         <HeaderTypo>{cell.toLocaleUpperCase()}</HeaderTypo>
-      //         <SubHeaderTypo>{state.selectedContract[cell]}</SubHeaderTypo>
-      //       </DetailBox>
-      //     );
-      //   });
       return (
         <React.Fragment>
           <DetailBox>
@@ -53,14 +43,13 @@ const CampaignDetailSection = () => {
           <DetailBox>
             <HeaderTypo>Fund Raised</HeaderTypo>
             <SubHeaderTypo>
-              {state.selectedContract.amountCollected}/{state.selectedContract.minimumFund}
+              {state.selectedContract.amountCollected}/
+              {state.selectedContract.minimumFund}
             </SubHeaderTypo>
           </DetailBox>
           <DetailBox>
             <HeaderTypo>No of donors</HeaderTypo>
-            <SubHeaderTypo>
-              {state.selectedContract.donorsCount}
-            </SubHeaderTypo>
+            <SubHeaderTypo>{state.selectedContract.donorsCount}</SubHeaderTypo>
           </DetailBox>
           <DetailBox>
             <HeaderTypo>Minimum donation</HeaderTypo>
@@ -77,10 +66,17 @@ const CampaignDetailSection = () => {
   return (
     <ParentCotainer>
       <FlexContainer>
-        <LeftChild>
-          {/* <CellContainer>{() => getContractDataCells()}</CellContainer> */}
-          {getContractDataCells()}
-        </LeftChild>
+        <ColumnFlex>
+          <LeftChild>
+            {/* <CellContainer>{() => getContractDataCells()}</CellContainer> */}
+            {getContractDataCells()}
+          </LeftChild>
+          <ViewRequests onClick={navigateToRequestPage}>
+            <Typography style={{ color: "#F7F7F7", fontSize: 16 }}>
+              View transfer requests
+            </Typography>
+          </ViewRequests>
+        </ColumnFlex>
         <RightChild>
           <ContributeSection />
         </RightChild>

@@ -45,7 +45,7 @@ const InputForm = () => {
       name: "Campaign Image",
       onClick: () =>
         setCampaignImage(
-          "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tesla.com%2Fmodels&psig=AOvVaw0kXfTdreKjYjw4PmPYpYGy&ust=1652544446174000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIDalPjt3PcCFQAAAAAdAAAAABAD"
+          "https://www.tesla.com/sites/default/files/images/roadster/roadster-social.jpg"
         ),
     },
     {

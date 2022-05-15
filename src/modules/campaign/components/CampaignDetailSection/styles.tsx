@@ -13,7 +13,7 @@ export const FlexContainer = styled(Box)(({}) => ({
 
 export const LeftChild= styled(Box)(({}) => ({
     display: 'flex',
-    width: '70%',
+    // width: '70%',
     flexWrap: 'wrap'
 }));
 
@@ -65,4 +65,12 @@ export const ColumnFlex = styled(Box)(({}) => ({
 export const FlexEnd = styled(Box)(({}) => ({
     display: 'flex',
     justifyContent: 'flex-end',
+}));
+
+export const ViewRequests = styled(Button)(({}) => ({
+    backgroundColor: '#5463FF',
+    marginTop: 20,
+    width: 250,
+    height: 40,
+    textTransform: 'none'
 }));
