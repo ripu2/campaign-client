@@ -143,11 +143,10 @@ export function useCreateTransferRequest() {
       const campaignInstance = campaign(address)
       const accounts = await web3.eth.getAccounts()
 
-      const res = await campaignInstance.methods.createRequest(requsetAmount, description, recipient).send({
+      const res = await campaignInstance.methods.createRequest(Number(requsetAmount), description, recipient).send({
         from: accounts[0],
         gas: '1000000'
       })
-      console.log('res ====>', res)
     } catch (error) {
       alert(error.message)
     }

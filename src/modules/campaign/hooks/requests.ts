@@ -39,7 +39,6 @@ export function useGetTransferRequest(dispatch: Dispatch<any>) {
         let arr = []
         const campaignInstance = campaign(address)
         const res = await campaignInstance.methods.getRequestCount().call()
-        console.log('res ====>', res)
         while(count < res) {
           const req = await campaignInstance.methods.requests(count).call()
           delete req["0"]
@@ -56,10 +55,9 @@ export function useGetTransferRequest(dispatch: Dispatch<any>) {
             complete: req["complete"]
           }
           arr.push(requestObj)
-          console.log('arrr ====>', arr)
-          if(dispatch) dispatch(requestAction.setRequests(arr))
           count++;
         }
+        if(dispatch) dispatch(requestAction.setRequests(arr))
         return arr
       } catch (error) {
         alert(error.message)
@@ -67,4 +65,45 @@ export function useGetTransferRequest(dispatch: Dispatch<any>) {
     }
   
     return { getTransferRequests }
+  }
+
+  export function useApproveTransferRequest(dispatch: Dispatch<any>){
+    const approveRequest = async (address: string, index: number) => {
+      try {
+        const campaignInstance = campaign(address)
+        const accounts = await web3.eth.getAccounts()
+        const { getTransferRequests } = useGetTransferRequest(dispatch)
+
+        const res = await campaignInstance.methods.approveRequest(index).send({
+          from: accounts[0],
+          gas: "10000000"
+        })
+        await getTransferRequests(address)
+        console.log('res======>', res)
+      } catch (error) {
+        console.log('err', error)
+      }
+    }
+
+    return { approveRequest }
+  }
+
+  export function useFinalizeTransferRequest(dispatch: Dispatch<any>){
+    const finalizeTransaction = async (address: string, index: number) => {
+      try {
+        const campaignInstance = campaign(address)
+        const accounts = await web3.eth.getAccounts()
+        const { getTransferRequests } = useGetTransferRequest(dispatch)
+
+        await campaignInstance.methods.finalizeTransaction(index).send({
+          from: accounts[0],
+          gas: "10000000"
+        })
+        await getTransferRequests(address)
+      } catch (error) {
+        console.log('err', error)
+      }
+    }
+
+    return { finalizeTransaction }
   }

@@ -4,18 +4,23 @@ import { useRequesrContext } from "../../context/requestContext";
 import { RequestType } from "../../types";
 import TableCell from "../tableCell";
 import TableContainer from "@mui/material/TableContainer";
-
+import { useApproveTransferRequest, useFinalizeTransferRequest } from "../../hooks/requests"
 import {
-  TableHeader,
-  TableHeaderContainer,
+  ApproveButtonContainer,
+  TransferButtonContainer,
   StyledTableCell,
   StyledTableRow,
 } from "./style";
+import { useRouter } from "next/router";
 
 export default function RequestTable() {
   const { state, dispatch } = useRequesrContext();
+  const { approveRequest } = useApproveTransferRequest(dispatch)
+  const { finalizeTransaction } = useFinalizeTransferRequest(dispatch)
 
-  console.log("state", state);
+  const router = useRouter()
+  const address = router.query.address as string
+
 
   const getTableHeader = () => {
     return (
@@ -33,19 +38,22 @@ export default function RequestTable() {
     );
   };
 
+  const onApproveClick = async (id: number) => {
+    console.log('call')
+    await approveRequest(address, id)
+  }
+
+  const finalizeTransactionHandler = async (id: number) => {
+    await finalizeTransaction(address, id)
+  }
+
   const getTableBody = useCallback(() => {
     return (
       <TableBody>
         {state.request &&
           state.request.map((request: RequestType, index: number) => {
             return (
-              // <TableCell
-              //   {...request}
-              //   index={index}
-              //   onApprove={() => {}}
-              //   onFinalize={() => {}}
-              // />
-              <StyledTableRow>
+              <StyledTableRow key={index}>
                 <StyledTableCell align="left">
                   {index + 1}
                 </StyledTableCell>
@@ -59,8 +67,16 @@ export default function RequestTable() {
                 <StyledTableCell align="left">
                   {request.approvalCount}
                 </StyledTableCell>
-                <StyledTableCell align="left">{"Approve"}</StyledTableCell>
-                <StyledTableCell align="left">{"Transfer"}</StyledTableCell>
+                <StyledTableCell align="left">
+                  <ApproveButtonContainer onClick={() => onApproveClick(index)}>
+                    {"Approve"}
+                  </ApproveButtonContainer>
+                  </StyledTableCell>
+                <StyledTableCell align="left">
+                  <TransferButtonContainer onClick={() => finalizeTransactionHandler(index)}>
+                    Transfer
+                  </TransferButtonContainer>
+                </StyledTableCell>
               </StyledTableRow>
             );
           })}
@@ -70,10 +86,6 @@ export default function RequestTable() {
 
   return (
     <React.Fragment>
-      {/* <TableContainer>
-        <TableHeader>{getTableHeader()}</TableHeader>
-        {state.request && getTableBody()}
-      </TableContainer> */}
       <TableContainer>
         <Table>
           {getTableHeader()}

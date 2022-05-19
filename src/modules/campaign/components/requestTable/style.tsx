@@ -41,3 +41,13 @@ export const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
+export const ApproveButtonContainer = styled(Button)(({}) => ({
+  border: '2px solid #B8F1B0',
+  textTransform: 'none'
+}));
+
+export const TransferButtonContainer = styled(Button)(({}) => ({
+  border: '2px solid #205375',
+  textTransform: 'none'
+}));
