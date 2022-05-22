@@ -61,7 +61,7 @@ export function useCreateCampaign() {
   return { createNewCampaign }
 }
 
-export function useGetCampaignData(dispatch: Dispatch<any>) {
+export function useGetCampaignData(dispatch: Dispatch<any> | null) {
   const getCampaignData = async (campaignAddress: string) => {
 
     try {

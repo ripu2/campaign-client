@@ -1,7 +1,7 @@
 import Web3 from "web3";
 
 let web3
-
+declare var window: any
 // window variable is only available in windows, since next uses SSR, window won't be available
 
 if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
@@ -16,4 +16,4 @@ if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
     web3 = new Web3(provider);
   }
  
-export default web3;
+export default web3 as any;

@@ -12,6 +12,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useRouter } from "next/router";
 import { useGetCampaignData } from "../../hooks/campaign";
 import { contractType } from "../../types";
+import { useCampaigContext } from "../../context/campaignContext";
 interface cardProps {
   contractAddress: string;
 }
@@ -19,12 +20,13 @@ interface cardProps {
 export default function CampaignCard(props: cardProps) {
 
   const [contractData, setContractData] = useState<contractType | undefined>(undefined)
+  const { state, dispatch } = useCampaigContext()
 
   const router = useRouter()
-  const { getCampaignData } = useGetCampaignData()
+  const { getCampaignData } = useGetCampaignData(dispatch)
 
   const setContractDetails = async () => {
-    const data: contractType = await getCampaignData(props.contractAddress)
+    const data: contractType | undefined = await getCampaignData(props.contractAddress)
     setContractData(data)
   }
 
